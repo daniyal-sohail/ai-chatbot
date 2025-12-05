@@ -5,6 +5,7 @@ export default authMiddleware({
     ignoredRoutes: ["/chatbot"]
 })
 
+
 export const config = {
     matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 }
