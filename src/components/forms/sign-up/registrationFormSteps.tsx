@@ -2,9 +2,25 @@
 import { useAuthContextHook } from '@/context/useAuthContext'
 import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import SelectionFormType from './SelectionFormType'
+import SelectionFormType from './selectionFormType'
 
-const RegistrationFormSteps = ({ children }: { children: React.ReactNode }) => {
+import { Spinner } from '@/components/spinner'
+import dynamic from 'next/dynamic'
+
+const LoadingSpinner = () => <Spinner />
+
+const AccountDetailsForm = dynamic(() => import('./accountDetailForm'), {
+    ssr: false,
+    loading: LoadingSpinner,
+})
+
+const OTPForm = dynamic(() => import('./otpForm'), {
+    ssr: false,
+    loading: LoadingSpinner,
+})
+
+
+const RegistrationFormSteps = () => {
 
     const {
         register,
@@ -13,7 +29,7 @@ const RegistrationFormSteps = ({ children }: { children: React.ReactNode }) => {
     } = useFormContext()
 
     const { currentStep } = useAuthContextHook()
-    const [onOTP, setOnOTP] = useState<boolean>(false)
+    const [onOTP, setOnOTP] = useState<string>('')
     const [onUserType, setOnUserType] = useState<'owner' | 'student'>('owner')
 
     setValue('otp', onOTP)
@@ -29,7 +45,7 @@ const RegistrationFormSteps = ({ children }: { children: React.ReactNode }) => {
             )
         case 2:
             return (
-                <DetailForm
+                <AccountDetailsForm
                     errors={errors}
                     register={register}
                 />
@@ -47,7 +63,6 @@ const RegistrationFormSteps = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
             <h1>Registration Form Steps</h1>
-            {children}
         </div>
     )
 }

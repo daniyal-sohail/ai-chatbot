@@ -2,7 +2,7 @@
 
 import { client } from '@/lib/prisma'
 import { currentUser, redirectToSignIn } from '@clerk/nextjs'
-import { onGetAllAccountDomains } from '../settings'
+import { onGetAllAccountDomains } from '@/actions/settings'
 
 export const onCompleteUserRegistration = async (
     fullname: string,

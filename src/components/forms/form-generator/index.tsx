@@ -1,0 +1,116 @@
+'use client'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import React from 'react'
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import { Textarea } from '@/components/ui/textarea'
+
+type Props = {
+    type: 'text' | 'email' | 'password'
+    inputType: 'select' | 'input' | 'textarea'
+    options?: { value: string; label: string; id: string }[]
+    label?: string
+    placeholder: string
+    register: UseFormRegister<any>
+    name: string
+    errors: FieldErrors<FieldValues>
+    lines?: number
+    form?: string
+    defaultValue?: string
+}
+
+const FormGenerator = ({
+    errors,
+    inputType,
+    name,
+    placeholder,
+    defaultValue,
+    register,
+    type,
+    form,
+    label,
+    lines,
+    options,
+}: Props) => {
+    switch (inputType) {
+        case 'input':
+        default:
+            return (
+                <Label
+                    className="flex flex-col gap-2"
+                    htmlFor={`input-${label}`}
+                >
+                    {label && label}
+                    <Input
+                        id={`input-${label}`}
+                        type={type}
+                        placeholder={placeholder}
+                        form={form}
+                        defaultValue={defaultValue}
+                        {...register(name)}
+                    />
+                    {errors[name] && (
+                        <p className="text-red-400 mt-2">
+                            {errors[name]?.message === 'Required'
+                                ? ''
+                                : (errors[name]?.message as string)}
+                        </p>
+                    )}
+                </Label>
+            )
+        case 'select':
+            return (
+                <Label htmlFor={`select-${label}`}>
+                    {label && label}
+                    <select
+                        form={form}
+                        id={`select-${label}`}
+                        {...register(name)}
+                    >
+                        {options?.length &&
+                            options.map((option) => (
+                                <option
+                                    value={option.value}
+                                    key={option.id}
+                                >
+                                    {option.label}
+                                </option>
+                            ))}
+                    </select>
+                    {errors[name] && (
+                        <p className="text-red-400 mt-2">
+                            {errors[name]?.message === 'Required'
+                                ? ''
+                                : (errors[name]?.message as string)}
+                        </p>
+                    )}
+                </Label>
+            )
+        case 'textarea':
+            return (
+                <Label
+                    className="flex flex-col gap-2"
+                    htmlFor={`input-${label}`}
+                >
+                    {label && label}
+                    <Textarea
+                        form={form}
+                        id={`input-${label}`}
+                        placeholder={placeholder}
+                        {...register(name)}
+                        rows={lines}
+                        defaultValue={defaultValue}
+                    />
+                    {errors[name] && (
+                        <p className="text-red-400 mt-2">
+                            {errors[name]?.message === 'Required'
+                                ? ''
+                                : (errors[name]?.message as string)}
+                        </p>
+                    )}
+                </Label>
+            )
+    }
+}
+
+export default FormGenerator

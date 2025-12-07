@@ -1,5 +1,5 @@
 "use client"
-import { ReactNode, Dispatch, createContext, useContext } from "react"
+import { ReactNode, Dispatch, createContext, useContext, useState } from "react"
 
 type InitialValuesProps = {
     currentStep: number
@@ -20,7 +20,9 @@ export const AuthContextProvider = ({
 }: {
     children: ReactNode
 }) => {
-    return <Provider value={InitialValues}>{children}</Provider>
+    const [currentStep, setCurrentStep] = useState(1)
+
+    return <Provider value={{ currentStep, setCurrentStep }}>{children}</Provider>
 }
 
 export const useAuthContextHook = () => {
