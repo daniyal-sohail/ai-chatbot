@@ -1,65 +1,108 @@
-import Image from "next/image";
+import NavBar from '@/components/navbar'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { pricingCards } from '@/constants/landingPage'
+import clsx from 'clsx'
+import { Check } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+      <NavBar />
+      <section>
+        <div className="flex items-center justify-center flex-col mt-[80px] gap-4 ">
+          <span className="text-orange bg-orange/20 px-4 py-2 rounded-full text-sm">
+            An AI powered sales assistant chatbot
+          </span>
+          <Image
+            src="/images/corinna-ai-logo.png"
+            width={500}
+            height={100}
+            alt="Logo"
+            className="max-w-lg object-contain"
+          />
+          <p className="text-center max-w-[500px]">
+            Your AI powered sales assistant! Embed Corinna AI into any website
+            with just a snippet of code!
           </p>
+          <Button className="bg-orange font-bold text-white px-4">
+            Start For Free
+          </Button>
+          <Image
+            src="/images/iphonecorinna.png"
+            width={400}
+            height={100}
+            alt="Logo"
+            className="max-w-lg object-contain"
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+      <section className="flex justify-center items-center flex-col gap-4 mt-10">
+        <h2 className="text-4xl text-center"> Choose what fits you right</h2>
+        <p className="text-muted-foreground text-center max-w-lg">
+          Our straightforward pricing plans are tailored to meet your needs. If
+          {" you're"} not ready to commit you can get started for free.
+        </p>
+      </section>
+      <div className="flex  justify-center gap-4 flex-wrap mt-6">
+        {pricingCards.map((card: any) => (
+          <Card
+            key={card.title}
+            className={clsx('w-[300px] flex flex-col justify-between', {
+              'border-2 border-primary': card.title === 'Unlimited',
+            })}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            <CardHeader>
+              <CardTitle className="text-orange">{card.title}</CardTitle>
+              <CardDescription>
+                {pricingCards.find((c) => c.title === card.title)?.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <span className="text-4xl font-bold">{card.price}</span>
+              <span className="text-muted-foreground">
+                <span>/ month</span>
+              </span>
+            </CardContent>
+            <CardFooter className="flex flex-col items-start gap-4">
+              <div>
+                {card.features.map((feature: any) => (
+                  <div
+                    key={feature}
+                    className="flex gap-2"
+                  >
+                    <Check />
+                    <p>{feature}</p>
+                  </div>
+                ))}
+              </div>
+              <Link
+                href={`/dashbord?plan=${card.title}`}
+                className="bg-[#f3d299] border-orange border-2 p-2 w-full text-center font-bold rounded-md"
+              >
+                Get Started
+              </Link>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+
+      <section className="flex justify-center items-center flex-col gap-4 mt-28">
+        <h2 className="text-4xl text-center">News Room</h2>
+        <p className="text-muted-foreground text-center max-w-lg">
+          Explore our insights on AI, technology, and optimizing your business.
+        </p>
+      </section>
+
+    </main>
   );
 }
