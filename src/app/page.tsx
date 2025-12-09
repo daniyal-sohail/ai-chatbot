@@ -1,3 +1,4 @@
+import { onGetBlogsPosts } from '@/actions/landing'
 import NavBar from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import {
@@ -14,7 +15,10 @@ import { Check } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+
+
+
   return (
     <main>
       <NavBar />
