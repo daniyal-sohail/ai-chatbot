@@ -1,10 +1,15 @@
+import InfoBar from '@/components/infobar'
+import BillingSettings from '@/components/settings/billingSettings'
 import React from 'react'
 
 type Props = {}
 const SettingsPage = (props: Props) => {
     return (
         <div>
-            <h1>Settings Page</h1>
+            <InfoBar />
+            <div className="overflow-y-auto w-full chat-window flex-1 h-0 flex flex-col gap-10">
+                <BillingSettings />
+            </div>
         </div>
     )
 }
