@@ -2,6 +2,8 @@
 
 import useSideBar from "@/context/useSidebar"
 import { cn } from "@/lib/utils"
+import { MinMenu } from "./minMenu"
+import MaxMenu from "./maxMenu"
 
 
 
